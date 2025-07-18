@@ -125,8 +125,10 @@ function guardarEstado(codigo, estado) {
 function actualizarEstado() {
   ramos.forEach(({ codigo, prerrequisitos }) => {
     const el = document.querySelector(`[data-codigo="${codigo}"]`);
+    if (!el) return;
     const aprobado = cargarEstado(codigo);
     const requisitosCumplidos = prerrequisitos.every(c => cargarEstado(c));
+
     if (aprobado) {
       el.classList.add("aprobado");
       el.classList.remove("bloqueado");
@@ -135,6 +137,7 @@ function actualizarEstado() {
       el.classList.remove("aprobado");
     } else {
       el.classList.remove("bloqueado");
+      el.classList.remove("aprobado");
     }
   });
 }
@@ -147,7 +150,7 @@ function crearRamo({ codigo, nombre }) {
 
   div.addEventListener("click", () => {
     if (div.classList.contains("bloqueado")) return;
-    const aprobado = div.classList.toggle("aprobado");
+    const aprobado = !div.classList.contains("aprobado");
     guardarEstado(codigo, aprobado);
     actualizarEstado();
   });
@@ -156,33 +159,41 @@ function crearRamo({ codigo, nombre }) {
 }
 
 function renderRamosPorSemestre() {
-  const contenedor = document.getElementById("malla");
-   contenedor.innerHTML = "";
+  container.innerHTML = "";
   const semestres = {};
+
   ramos.forEach(r => {
     if (!semestres[r.semestre]) semestres[r.semestre] = [];
     semestres[r.semestre].push(r);
   });
 
   Object.keys(semestres).sort((a, b) => parseInt(a) - parseInt(b)).forEach(num => {
-    const contenedor = document.createElement("div");
-    contenedor.className = "semestre-bloque";
+    const bloque = document.createElement("div");
+    bloque.className = "semestre-bloque";
 
     const titulo = document.createElement("h2");
     titulo.textContent = `${num}º Semestre`;
-    contenedor.appendChild(titulo);
+    bloque.appendChild(titulo);
 
     const fila = document.createElement("div");
     fila.className = "fila-ramos";
     semestres[num].forEach(r => fila.appendChild(crearRamo(r)));
 
-    contenedor.appendChild(fila);
-    container.appendChild(contenedor);
+    bloque.appendChild(fila);
+    container.appendChild(bloque);
   });
+
+  actualizarEstado();
 }
 
+document.getElementById("reset").addEventListener("click", () => {
+  if (confirm("¿Seguro que quieres reiniciar tu progreso?")) {
+    ramos.forEach(r => localStorage.removeItem("aprobado_" + r.codigo));
+    renderRamosPorSemestre();
+  }
+});
+
 renderRamosPorSemestre();
-actualizarEstado();
 
 
 
