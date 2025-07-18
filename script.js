@@ -237,6 +237,7 @@ function renderRamosPorSemestre() {
       contenedor.appendChild(bloque);
     });
 }
+renderRamosPorSemestre();
 
 
 
