@@ -1,5 +1,4 @@
 const ramos = [
-  const ramos = [
   // 1er semestre
   { codigo: "ESTRAT", nombre: "ESTRATEGIAS DE APRENDIZAJE EN EDUCACIÓN SUPERIOR UNIVERSITARIA", prerrequisitos: [], semestre: 1 },
   { codigo: "FHU", nombre: "FORMACIÓN PERSONAL HUMANÍSTICA", prerrequisitos: [], semestre: 1 },
@@ -157,6 +156,8 @@ function crearRamo({ codigo, nombre }) {
 }
 
 function renderRamosPorSemestre() {
+  const contenedor = document.getElementById("malla");
+   contenedor.innerHTML = "";
   const semestres = {};
   ramos.forEach(r => {
     if (!semestres[r.semestre]) semestres[r.semestre] = [];
