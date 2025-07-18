@@ -182,5 +182,61 @@ function renderRamosPorSemestre() {
 
 renderRamosPorSemestre();
 actualizarEstado();
+function renderRamosPorSemestre() {
+  const contenedor = document.getElementById("malla");
+  contenedor.innerHTML = "";
+
+  // Agrupar ramos por semestre
+  const ramosPorSemestre = {};
+  ramos.forEach(ramo => {
+    if (!ramosPorSemestre[ramo.semestre]) {
+      ramosPorSemestre[ramo.semestre] = [];
+    }
+    ramosPorSemestre[ramo.semestre].push(ramo);
+  });
+
+  // Ordenar semestres y renderizar
+  Object.keys(ramosPorSemestre)
+    .sort((a, b) => Number(a) - Number(b))
+    .forEach(semestre => {
+      const bloque = document.createElement("div");
+      bloque.classList.add("semestre-bloque");
+
+      const titulo = document.createElement("h3");
+      titulo.textContent = `${semestre}° Semestre`;
+      titulo.classList.add("semestre-titulo");
+
+      const fila = document.createElement("div");
+      fila.classList.add("fila-ramos");
+
+      ramosPorSemestre[semestre].forEach(ramo => {
+        const btn = document.createElement("button");
+        btn.textContent = ramo.nombre;
+        btn.classList.add("ramo");
+        btn.id = ramo.codigo;
+        btn.disabled = !ramo.prerrequisitos.every(pr => aprobados.includes(pr));
+        if (aprobados.includes(ramo.codigo)) {
+          btn.classList.add("aprobado");
+        }
+
+        btn.addEventListener("click", () => {
+          if (aprobados.includes(ramo.codigo)) {
+            aprobados = aprobados.filter(cod => cod !== ramo.codigo);
+          } else {
+            aprobados.push(ramo.codigo);
+          }
+          localStorage.setItem("aprobados", JSON.stringify(aprobados));
+          renderRamosPorSemestre();
+        });
+
+        fila.appendChild(btn);
+      });
+
+      bloque.appendChild(titulo);
+      bloque.appendChild(fila);
+      contenedor.appendChild(bloque);
+    });
+}
+
 
 
