@@ -1,64 +1,73 @@
 body {
-  font-family: sans-serif;
-  background-color: #f5f8ff;
+  font-family: Arial, sans-serif;
+  background: #f0f4ff;
+  margin: 0;
+  padding: 20px;
   color: #333;
-  padding: 2rem;
 }
 
 h1 {
   text-align: center;
-  color: #4b3f72;
+  color: #4a4fa3;
 }
 
 #reset {
-  margin: 2rem auto;
   display: block;
-  padding: 0.5rem 1rem;
-  background-color: #c9a1ff;
+  margin: 20px auto;
+  padding: 10px 20px;
+  background-color: #4a4fa3;
   color: white;
   border: none;
   border-radius: 8px;
   cursor: pointer;
+  font-weight: bold;
 }
 
 .semestre-bloque {
-  margin-bottom: 2rem;
-  padding: 1rem;
-  background-color: #e3e8ff;
+  margin-bottom: 30px;
+  background: #ffffff;
   border-radius: 12px;
-  box-shadow: 0 0 5px rgba(0,0,0,0.1);
+  padding: 20px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
 .semestre-bloque h2 {
-  margin-bottom: 0.5rem;
-  color: #5c4d7d;
+  color: #4a4fa3;
+  margin-bottom: 15px;
+  border-bottom: 2px solid #d0d4f2;
+  padding-bottom: 5px;
 }
 
 .fila-ramos {
   display: flex;
   flex-wrap: wrap;
-  gap: 0.5rem;
+  gap: 10px;
 }
 
 .ramo {
-  background-color: #d0e3ff;
-  border: none;
-  padding: 0.7rem 1rem;
+  background-color: #e3e7ff;
+  border: 2px solid #b2b8e3;
+  padding: 10px;
   border-radius: 10px;
-  cursor: pointer;
-  transition: 0.3s;
-  flex: 1 1 200px;
+  width: 220px;
   text-align: center;
+  cursor: pointer;
+  transition: all 0.3s ease;
 }
 
-.ramo.bloqueado {
-  background-color: #ccc;
-  cursor: not-allowed;
-  opacity: 0.6;
+.ramo:hover {
+  background-color: #ccd3f9;
 }
 
 .ramo.aprobado {
-  background-color: #8be3a5;
-  color: #094d2e;
-  font-weight: bold;
+  background-color: #b3f0c0;
+  border-color: #62d98b;
 }
+
+.ramo.bloqueado {
+  background-color: #f2f2f2;
+  color: #999;
+  border-color: #ccc;
+  cursor: not-allowed;
+}
+
